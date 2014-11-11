@@ -1,12 +1,15 @@
 ## credits-to
+Summarize npm and bower dependencies so you can give credit.
+
+## Install
 ```
 $ npm install credits-to
 ```
 
-Summarize npm and bower dependencies so you can give credit ;)
-
+## Features
 - collects installed information only, ie package.json, bower.json/.bower.json must exist
-- collects all versions
+- collects all versions, licenses and repositories
+- normalizes repository urls
 - handles dependencies, devDependencies, peerDependencies
 
 ## Usage
