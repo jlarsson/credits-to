@@ -1,4 +1,6 @@
 (function(module) {
+  'use strict';
+
   var fspath = require('path');
   var fs = require('fs');
   var async = require('async');
@@ -6,6 +8,10 @@
 
   function scan(options, callback) {
 
+    if (options instanceof Function) {
+      callback = options;
+      options = {};
+    }
     var opts = _.defaults({}, options, {
       root: '.',
       npm: true,
@@ -87,14 +93,12 @@
             repositories: []
           };
         }
-
         dep.versions = _([json.version, [dep.versions]])
           .flatten()
           .filter()
           .uniq()
           .sort()
           .value();
-
         dep.licenses = _([dep.licenses, json.license, json.licenses])
           .flatten()
           .filter()
@@ -105,9 +109,7 @@
           .uniq()
           .sort()
           .value();
-
-
-        dep.repositories = _([dep.repositories, json.repository, json.repositories])
+      dep.repositories = _([dep.repositories, json.repository, json.repositories])
           .flatten()
           .filter()
           .map(function(r) {
@@ -117,7 +119,6 @@
           .uniq()
           .sort()
           .value();
-
         function enqueue(deps, relativeTo) {
           _(deps || {}).each(function(version, name) {
             q.push(readFile(fspath.resolve(relativeTo, 'node_modules/' + name + '/package.json'), analyzeNpm));
@@ -151,7 +152,16 @@
           .uniq()
           .sort()
           .value();
-
+        dep.licenses = _([dep.licenses, json.license, json.licenses])
+          .flatten()
+          .filter()
+          .map(function(l) {
+            return _.isString(l) ? l : l.type;
+          })
+          .filter()
+          .uniq()
+          .sort()
+          .value();
         dep.repositories = _([dep.repositories, json._source])
           .flatten()
           .filter()

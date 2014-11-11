@@ -1,12 +1,19 @@
 {
   "name": "credits-to",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
+  "keywords": ["license","npm","bower","credit"],
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jlarsson/credits-to.git"
+  },
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "author": {
+    "name": "Joakim Larsson"
+  },
   "license": "MIT",
   "devDependencies": {
     "mocha": "^2.0.1",
@@ -15,5 +22,6 @@
   "dependencies": {
     "async": "^0.9.0",
     "lodash": "^2.4.1"
-  }
+  },
+  "files": "index.js"
 }
